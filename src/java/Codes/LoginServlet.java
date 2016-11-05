@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.logging.Level;
