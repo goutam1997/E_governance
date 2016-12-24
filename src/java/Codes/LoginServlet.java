@@ -1,3 +1,7 @@
+/*
+MAKE NECESSARY CHANGES TO THE CODE WHEREVER MENTIONED
+*/
+
 package Codes;
 
 import java.security.NoSuchAlgorithmException;
@@ -48,8 +52,8 @@ public class LoginServlet extends HttpServlet
         }
         response.setContentType("text/html");
         PrintWriter out=response.getWriter();
-        String name=request.getParameter("uname");
-        String password=request.getParameter("rno");
+        String name=request.getParameter("uname"); // MAKE CHANGES
+        String password=request.getParameter("rno"); // MAKE CHANGES
         try
         {
             password = hash(password);
@@ -63,20 +67,7 @@ public class LoginServlet extends HttpServlet
 		{
 			request.setAttribute("result",val.name);
 			getServletContext().getRequestDispatcher("/hello.jsp").forward(request, response);
-			/*
-            try 
-			{
-                out.print("<html><body>");
-                out.print("welcome "+name);
-                out.print("<br />");
-                out.print("password - "+password);
-                out.print("</body></html>");
-            }
-			catch(Exception e) 
-			{
-                out.close();
-            }
-			*/
+			
         }
         else
 		{
@@ -114,11 +105,9 @@ public class LoginServlet extends HttpServlet
         try
 		{
             Class.forName("com.mysql.jdbc.Driver");
-				//Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mysql","root","papan2202");
-				//Statement stmt = conn.createStatement();
 
             System.out.println("Connection is being created");
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/sis_db","root","papan2202");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/sis_db","root","papan2202"); // MAKE CHANGES
             //here sonoo is database name, root is username and password
             System.out.println("Connection done");
             Statement stmt=myConn.createStatement();
