@@ -99,7 +99,7 @@ public class LoginServlet extends HttpServlet
         }
         return hashtext;
     }
-    public Details isPresent(String passwrord,String name)
+    public Details isPresent(String password,String name)
 	{
         Details obj=new Details();
         try
@@ -112,7 +112,7 @@ public class LoginServlet extends HttpServlet
             System.out.println("Connection done");
             Statement stmt=myConn.createStatement();
             System.out.println("query being done on "+name);
-            ResultSet rs1=stmt.executeQuery("select id from student_main where roll_no like '"+name+"'");
+            ResultSet rs1=stmt.executeQuery("select id from student_main where roll_no like '"+name+"' and pass_hash like '"+password+"'");
             System.out.println("queried");
             
             System.out.println("Connection closed");
