@@ -52,8 +52,9 @@ public class LoginServlet extends HttpServlet
         }
         response.setContentType("text/html");
         PrintWriter out=response.getWriter();
-        String name=request.getParameter("uname"); // MAKE CHANGES
-        String password=request.getParameter("rno"); // MAKE CHANGES
+        String name=request.getParameter("username");
+        String password=request.getParameter("passwords");
+		System.out.println (password);
         try
         {
             password = hash(password);
@@ -65,9 +66,33 @@ public class LoginServlet extends HttpServlet
         Details val=isPresent(password,name);
         if(val.flag)
 		{
-			request.setAttribute("result",val.name);
-			getServletContext().getRequestDispatcher("/hello.jsp").forward(request, response);
-			
+			if (val.user_type.equals("STUDENT"))
+			{
+				request.setAttribute("result",val.name);
+				getServletContext().getRequestDispatcher("/hello.jsp").forward(request, response);
+			}
+			else
+			{
+				out.print("<html><body>");
+				out.print("Welcome "+val.name+" "+val.user_type+"\n");
+				out.print("<br />");
+				out.print("</body></html>");
+				/*CODE FOR SEPERATE PAGES
+				String page="";
+				if (val.user_type.equals("VC")) page="/vc.jsp";
+				else if (val.user_type.equals("DoS")) page="/dos.jsp";
+				else if (val.user_type.equals("EC")) page="/ec.jsp";
+				else 
+				{
+					out.print("<html><body>");
+					out.print("ERROR");
+					out.print("<br />");
+					out.print("</body></html>");
+				}
+				request.setAttribute("result",val.name);
+				getServletContext().getRequestDispatcher(page).forward(request, response);
+				*/
+			}
         }
         else
 		{
@@ -105,9 +130,8 @@ public class LoginServlet extends HttpServlet
         try
 		{
             Class.forName("com.mysql.jdbc.Driver");
-
             System.out.println("Connection is being created");
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/sis_db","root","papan2202"); // MAKE CHANGES
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/sis_db","root","papan2202"); // change needed here
             //here sonoo is database name, root is username and password
             System.out.println("Connection done");
             Statement stmt=myConn.createStatement();
@@ -121,20 +145,34 @@ public class LoginServlet extends HttpServlet
 			if(rs1.next())
 			{
 				count++;
-				Statement stmt2=myConn.createStatement();
+				//Statement stmt2=myConn.createStatement();
                 obj.id=rs1.getInt(1);//error line if executed forcefully
                 obj.roll_no=name;
                 System.out.println(obj.id);
                 String query2="select * from student_details where student_main_id = '"+obj.id+"'";
-                ResultSet rs2=stmt2.executeQuery(query2);
+                ResultSet rs2=stmt.executeQuery(query2);
                 if(rs2.next())
 				{
                     obj.name=rs2.getString("first_name")+" "+rs2.getString("last_name");
 					System.out.println(obj.name);
                 }
                 System.out.println("id: " + obj.id);
+				obj.user_type="STUDENT";
                 obj.flag=true;
 				
+			}
+			else
+			{
+				ResultSet rs3=stmt.executeQuery("select * from admin_details where username like '"+name+"'and pass_hash like '"+password+"'");
+				if (rs3.next())
+				{
+					obj.id=rs3.getInt(1);
+					obj.roll_no=name;
+					obj.user_type=rs3.getString("admin_type");
+					System.out.println(obj.user_type);
+					obj.flag=true;
+					obj.name="ADMIN"; // changes required
+				}
 			}
 			myConn.close();
         }
