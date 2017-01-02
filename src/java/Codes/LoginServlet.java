@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet
 		}
 	}
     @Override
-    public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException
+    public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException
 	{
         try 
 		{
@@ -73,25 +73,13 @@ public class LoginServlet extends HttpServlet
 			}
 			else
 			{
-				out.print("<html><body>");
-				out.print("Welcome "+val.name+" "+val.user_type+"\n");
-				out.print("<br />");
-				out.print("</body></html>");
-				/*CODE FOR SEPERATE PAGES
-				String page="";
-				if (val.user_type.equals("VC")) page="/vc.jsp";
-				else if (val.user_type.equals("DoS")) page="/dos.jsp";
-				else if (val.user_type.equals("EC")) page="/ec.jsp";
-				else 
+				if (val.user_type.equals("VC"))
 				{
-					out.print("<html><body>");
-					out.print("ERROR");
-					out.print("<br />");
-					out.print("</body></html>");
+					String ele=status();
+					val.user_type=val.user_type+" "+ele;
 				}
-				request.setAttribute("result",val.name);
-				getServletContext().getRequestDispatcher(page).forward(request, response);
-				*/
+				request.setAttribute("result",val.user_type);
+				getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
 			}
         }
         else
@@ -124,14 +112,40 @@ public class LoginServlet extends HttpServlet
         }
         return hashtext;
     }
+	
+	public String status()
+	{
+		String x="";
+		try
+		{
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Connection is being created");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/sis_db?autoReconnect=true&useSSL=false","root","papan2202");
+            System.out.println("Connection done");
+			//System.out.println("Hollo");
+            Statement stmt=myConn.createStatement();
+			//System.out.println("KHollo");
+            ResultSet rs1=stmt.executeQuery("select flag from election_start where id = 1");
+			if (rs1.next())
+			x=rs1.getString("flag");
+			myConn.close();
+        }
+		catch(Exception ex)
+		{
+			System.out.println(ex);
+		}
+		return x;
+	}
+	
     public Details isPresent(String password,String name)
 	{
+		
         Details obj=new Details();
         try
 		{
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Connection is being created");
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/sis_db","root","papan2202"); // change needed here
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/sis_db","root","papan2202");
             //here sonoo is database name, root is username and password
             System.out.println("Connection done");
             Statement stmt=myConn.createStatement();
