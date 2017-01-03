@@ -10,11 +10,9 @@
 	<h1>Student Home</h1>
 	<h2> Welcome
 	<%
-		Object u=request.getAttribute("result"); // object forwarded form servlet
+		Object u=request.getAttribute("result"); // object forwarded from servlet
 		out.println("\n"+u.toString());
 	%>
 	</h2>
 </body>
 </html>
-
-	
