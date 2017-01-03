@@ -1,7 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+MAKE NECESSARY CHANGES TO THE CODE WHEREVER MENTIONED
+*/
 
 
 package Codes;
@@ -43,12 +42,12 @@ public class LoginServlet extends HttpServlet
     @Override
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException
 	{
-        try
+        try 
 		{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             System.out.println("Driver Loaded");
         }
-		catch (Exception ex)
+		catch (Exception ex) 
 		{
             System.out.println("SQL Driver not Found");
         }
@@ -61,7 +60,7 @@ public class LoginServlet extends HttpServlet
         {
             password = hash(password);
         }
-        catch (NoSuchAlgorithmException ex)
+        catch (NoSuchAlgorithmException ex) 
 		{
 			Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -75,6 +74,7 @@ public class LoginServlet extends HttpServlet
 			}
 			else
 			{
+
 				out.print("<html><body>");
 				out.print("Welcome "+val.name+" "+val.user_type+"\n");
 				out.print("<br />");
@@ -94,6 +94,8 @@ public class LoginServlet extends HttpServlet
 				request.setAttribute("result",val.name);
 				getServletContext().getRequestDispatcher(page).forward(request, response);
 				*/
+
+				
 			}
         }
         else
@@ -105,13 +107,13 @@ public class LoginServlet extends HttpServlet
                 out.print("<br />");
                 out.print("</body></html>");
             }
-			catch(Exception e)
+            catch(Exception e)
 			{
                 out.close();
             }
         }
     }
-    public String hash(String password) throws NoSuchAlgorithmException
+    public String hash(String password) throws NoSuchAlgorithmException 
 	{
         MessageDigest m = MessageDigest.getInstance("MD5");
         m.reset();
@@ -126,8 +128,7 @@ public class LoginServlet extends HttpServlet
         }
         return hashtext;
     }
-    public Details isPresent(String password,String name)
-	{
+    public Details isPresent(String password,String name){
         Details obj=new Details();
         try
 		{
@@ -140,7 +141,6 @@ public class LoginServlet extends HttpServlet
             System.out.println("query being done on "+name);
             ResultSet rs1=stmt.executeQuery("select id from student_main where roll_no like '"+name+"' and pass_hash like '"+password+"'");
             System.out.println("queried");
-
             System.out.println("Connection closed");
 			int count=0;
             String garbage="", u_type="";
@@ -161,7 +161,6 @@ public class LoginServlet extends HttpServlet
                 System.out.println("id: " + obj.id);
 				obj.user_type="STUDENT";
                 obj.flag=true;
-
 			}
 			else
 			{
