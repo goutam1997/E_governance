@@ -16,14 +16,22 @@
         <servlet-name>ElectionNomination</servlet-name>
         <servlet-class>Codes.ElectionNomination</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NominationsFiled</servlet-name>
+        <servlet-class>Codes.NominationsFiled</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECCreate</servlet-name>
+        <servlet-class>Codes.ECCreate</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
 	    <servlet-name>ElectionStart</servlet-name>
-	    <url-pattern>/elec_start</url-pattern>  
-    </servlet-mapping>  
+	    <url-pattern>/elec_start</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ElectionList</servlet-name>
         <url-pattern>/elec_list</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>ElectionNomination</servlet-name>
         <url-pattern>/nom_start</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NominationsFiled</servlet-name>
+        <url-pattern>/nom_filed</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECCreate</servlet-name>
+        <url-pattern>/committee</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

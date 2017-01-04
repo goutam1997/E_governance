@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<link rel="stylesheet" type="text/css" href="stylelogin.css">
-    <title>Admin Page</title>
+    <title>VC Admin Page</title>
 </head>
 <body>
 	<%
@@ -39,6 +39,7 @@
 						<option value="DoS">DoS</option>
 						<option value="EC">EC</option>
 					</select><br>
+
 					<input type="number" name="sno2" placeholder = "S.No" min="1" max="4" step="1" value="1"/>
 					<input type="text" name="name2" placeholder="name"/>
 					<input type="text" name="cno2" placeholder="contact no"/>
@@ -46,6 +47,7 @@
 						<option value="DoS">DoS</option>
 						<option value="EC">EC</option>
 					</select><br>
+
 					<input type="number" name="sno3" placeholder = "S.No" min="1" max="4" step="1" value="1"/>
 					<input type="text" name="name3" placeholder="name"/>
 					<input type="text" name="cno3" placeholder="contact no"/>
@@ -53,6 +55,7 @@
 						<option value="DoS">DoS</option>
 						<option value="EC">EC</option>
 					</select><br>
+
 					<input type="number" name="sno4" placeholder = "S.No" min="1" max="4" step="1" value="1"/>
 					<input type="text" name="name4" placeholder="name"/>
 					<input type="text" name="cno4" placeholder="contact no"/>

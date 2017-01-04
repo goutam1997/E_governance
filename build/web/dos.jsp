@@ -23,7 +23,8 @@
 		String u_type=str.substring(0,3);
 		out.println("\n"+u_type);
 		char flag=str.charAt(4);
-        char flagn=str.charAt(6);%>
+        char flagn=str.charAt(6);//whether nomination has started
+        %>
         <h1>welcome</h1>
         <%
 		if (u_type.equals("DoS"))
@@ -49,6 +50,15 @@
 				<input type="submit" value="Start Nomination">
                 </form>
 			<%
+                }
+                else
+                {
+                    %>
+                    <br />
+                    <form action = "nom_filed" method = "post">
+                    <input type="submit" value="See Nominations Filed">
+                    </form>
+                    <%
                 }
 			}
 			else

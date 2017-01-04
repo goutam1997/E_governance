@@ -1,13 +1,8 @@
 package Codes;
 
-import java.security.NoSuchAlgorithmException;
-import java.io.*;
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author SOUMYADEEP
+ * @author MANOSIJ
  */
+//chages to be done -
+/*
+ * connect with admin details table
+ * ensure only 1 dos
+*/
 public class ECCreate extends HttpServlet
 {
     private static final long serialVersionUID=1L;//important line
@@ -41,28 +41,31 @@ public class ECCreate extends HttpServlet
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/sis_db?autoReconnect=true&useSSL=false","root","abcdefgh");
 			System.out.println("Connection done");
 			PreparedStatement stmt;
+            boolean flag=false;
 			for (int i=1; i<=4; i++)
 			{
 				String name=request.getParameter("name"+i);
 				String cno=request.getParameter("cno"+i);
 				String ut=request.getParameter("utype"+i);
-				if (i==1)
+				if (name==null)
 				{
-					if (name==null || !(ut.equals("DoS"))) // not working!!!
-					{
-						out.println("<html><body>ERROR</body></html>");
-						throw new NullPointerException("Data field kept empty");
-					}
+                    throw new NullPointerException("Data field kept empty");
 				}
 				else // not working!!!
 				{
-					if (ut.equals("Dos"))
+					if (ut.equals("DoS")&&(!flag))
 					{
-						out.println("<html><body>DOS not unique</body></html>");
-						throw new Exception("DoS not unique");
+						flag=true;
 					}
+                    else if(ut.equals("DoS"))
+                    {
+                        out.println("<html><body>DOS not unique</body></html>");
+                        request.setAttribute("result","VC T");
+                        getServletContext().getRequestDispatcher("/vc.jsp").forward(request, response);//back to jsp page
+                    }
 				}
 				int sno=i;
+                System.out.println("name - "+name+" contact - "+cno+" user_type - "+ut+" sno - "+sno);
 				stmt=conn.prepareStatement("update election_committee set name = ? , contact = ? , user_type = ? where sno = ?");
 				stmt.setString(1,name);
 				stmt.setString(2,cno);
