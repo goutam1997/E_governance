@@ -15,7 +15,6 @@
     </head>
     <body>
         <h1>Please enter the details</h1>
-
         <form action="login" method = "post">
             Name      : <input type="text" name="username"><br />
             Password  : <input type="text" name="passwords"><br />

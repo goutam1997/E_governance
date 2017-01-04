@@ -1,10 +1,3 @@
-
-<%-- 
-    Document   : hello
-    Created on : 2 Jan, 2017, 7:47:34 PM
-    Author     : MANOSIJ
---%>
-
 <!doctype html>
 <html>
 <head>
@@ -17,8 +10,7 @@
 	<h1>Student Home</h1>
 	<h2> Welcome
 	<%
-
-		Object u=request.getAttribute("result"); // object forwarded form servlet
+		Object u=request.getAttribute("result"); // object forwarded from servlet
 		out.println("\n"+u.toString());
 	%>
 	</h2>

@@ -1,6 +1,7 @@
 /*
-MAKE NECESSARY CHANGES TO THE CODE WHEREVER MENTIONED
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 
 package Codes;
@@ -42,12 +43,12 @@ public class LoginServlet extends HttpServlet
     @Override
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException
 	{
-        try 
+        try
 		{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             System.out.println("Driver Loaded");
         }
-		catch (Exception ex) 
+		catch (Exception ex)
 		{
             System.out.println("SQL Driver not Found");
         }
@@ -60,7 +61,7 @@ public class LoginServlet extends HttpServlet
         {
             password = hash(password);
         }
-        catch (NoSuchAlgorithmException ex) 
+        catch (NoSuchAlgorithmException ex)
 		{
 			Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,20 +71,31 @@ public class LoginServlet extends HttpServlet
 			if (val.user_type.equals("STUDENT"))
 			{
 				request.setAttribute("result",val.name);
-				getServletContext().getRequestDispatcher("/hello.jsp").forward(request, response);
+				getServletContext().getRequestDispatcher("/student.jsp").forward(request, response);
 			}
 			else
 			{
-
-				out.print("<html><body>");
+				/*out.print("<html><body>");
 				out.print("Welcome "+val.name+" "+val.user_type+"\n");
 				out.print("<br />");
-				out.print("</body></html>");
-				/*CODE FOR SEPERATE PAGES
+				out.print("</body></html>");*/
+				//CODE FOR SEPERATE PAGES
 				String page="";
-				if (val.user_type.equals("VC")) page="/vc.jsp";
-				else if (val.user_type.equals("DoS")) page="/dos.jsp";
-				else if (val.user_type.equals("EC")) page="/ec.jsp";
+                String ele=status(1);
+				if (val.user_type.equals("VC")){
+                    page="/vc.jsp";
+                    val.user_type=val.user_type+" "+ele;
+                }
+				else if (val.user_type.equals("DoS")){
+                    page="/dos.jsp";
+                    val.user_type=val.user_type+" "+ele;
+                    ele=status(2);
+                    val.user_type+=" "+ele;
+                }
+				else if (val.user_type.equals("EC")){
+                    page="/ec.jsp";
+                    val.user_type=val.user_type+" "+ele;
+                }
 				else
 				{
 					out.print("<html><body>");
@@ -91,11 +103,8 @@ public class LoginServlet extends HttpServlet
 					out.print("<br />");
 					out.print("</body></html>");
 				}
-				request.setAttribute("result",val.name);
-				getServletContext().getRequestDispatcher(page).forward(request, response);
-				*/
-
-				
+				request.setAttribute("result",val.user_type);
+				getServletContext().getRequestDispatcher(page).forward(request, response);//error
 			}
         }
         else
@@ -107,13 +116,36 @@ public class LoginServlet extends HttpServlet
                 out.print("<br />");
                 out.print("</body></html>");
             }
-            catch(Exception e)
+			catch(Exception e)
 			{
                 out.close();
             }
         }
     }
-    public String hash(String password) throws NoSuchAlgorithmException 
+    public String status(int id)
+	{
+		String x="";
+		try
+		{
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Connection is being created");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/sis_db?autoReconnect=true&useSSL=false","root","abcdefgh");
+            System.out.println("Connection done");
+			//System.out.println("Hollo");
+            Statement stmt=myConn.createStatement();
+			//System.out.println("Hello");
+            ResultSet rs1=stmt.executeQuery("select flag from election_status where id = '"+id+"'");
+			if (rs1.next())
+			x=rs1.getString("flag");
+			myConn.close();
+        }
+		catch(Exception ex)
+		{
+			System.out.println(ex);
+		}
+		return x;
+	}
+    public String hash(String password) throws NoSuchAlgorithmException
 	{
         MessageDigest m = MessageDigest.getInstance("MD5");
         m.reset();
@@ -128,7 +160,8 @@ public class LoginServlet extends HttpServlet
         }
         return hashtext;
     }
-    public Details isPresent(String password,String name){
+    public Details isPresent(String password,String name)
+	{
         Details obj=new Details();
         try
 		{
@@ -141,9 +174,9 @@ public class LoginServlet extends HttpServlet
             System.out.println("query being done on "+name);
             ResultSet rs1=stmt.executeQuery("select id from student_main where roll_no like '"+name+"' and pass_hash like '"+password+"'");
             System.out.println("queried");
+
             System.out.println("Connection closed");
 			int count=0;
-            String garbage="", u_type="";
 			if(rs1.next())
 			{
 				count++;
@@ -161,6 +194,7 @@ public class LoginServlet extends HttpServlet
                 System.out.println("id: " + obj.id);
 				obj.user_type="STUDENT";
                 obj.flag=true;
+
 			}
 			else
 			{
