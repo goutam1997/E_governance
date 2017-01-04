@@ -47,9 +47,10 @@ public class ECCreate extends HttpServlet
 				String name=request.getParameter("name"+i);
 				String cno=request.getParameter("cno"+i);
 				String ut=request.getParameter("utype"+i);
-				if (name==null)
+				if (name.equals(""))
 				{
-                    throw new NullPointerException("Data field kept empty");
+                    request.setAttribute("result","VC T");
+                    getServletContext().getRequestDispatcher("/vc.jsp").forward(request, response);//back to jsp page
 				}
 				else // not working!!!
 				{
