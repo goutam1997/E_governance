@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MANOSIJ
  */
+//starts the election process
 public class ElectionStart extends HttpServlet
 {
     private static final long serialVersionUID=1L;//important line

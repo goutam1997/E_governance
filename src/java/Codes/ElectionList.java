@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MANOSIJ
  */
+//not done, must display the electoral list to dos
 public class ElectionList extends HttpServlet
 {
     private static final long serialVersionUID=1L;//important line

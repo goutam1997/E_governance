@@ -52,7 +52,7 @@ public class ECCreate extends HttpServlet
                     request.setAttribute("result","VC T");
                     getServletContext().getRequestDispatcher("/vc.jsp").forward(request, response);//back to jsp page
 				}
-				else // not working!!!
+				else
 				{
 					if (ut.equals("DoS")&&(!flag))
 					{
