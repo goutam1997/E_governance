@@ -18,6 +18,7 @@
         <form action="login" method = "post">
             Name      : <input type="text" name="username"><br />
             Password  : <input type="text" name="passwords"><br />
+            <%--make this password later--%>
                 <input type="submit" value="submit">
         </form>
         <p class="message">Forgot Password? <a href="#">Click Here</a></p>

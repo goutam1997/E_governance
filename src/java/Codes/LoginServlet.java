@@ -70,7 +70,10 @@ public class LoginServlet extends HttpServlet
 		{
 			if (val.user_type.equals("STUDENT"))
 			{
-				request.setAttribute("result",val.name);
+				
+                val.name=val.name+" "+status(2)+" "+status(4)+" "+status(5);
+                request.setAttribute("result",val.name);
+                request.setAttribute("id",val.id);
 				getServletContext().getRequestDispatcher("/student.jsp").forward(request, response);
 			}
 			else
@@ -84,7 +87,7 @@ public class LoginServlet extends HttpServlet
                 String ele=status(1);
 				if (val.user_type.equals("VC")){
                     page="/vc.jsp";
-                    val.user_type=val.user_type+" "+ele;
+                    val.user_type=val.user_type+" "+ele+" "+status(3);
                 }
 				else if (val.user_type.equals("DoS")){
                     page="/dos.jsp";
@@ -94,7 +97,7 @@ public class LoginServlet extends HttpServlet
                 }
 				else if (val.user_type.equals("EC")){
                     page="/ec.jsp";
-                    val.user_type=val.user_type+" "+ele;
+                    val.user_type=val.user_type+" "+ele+" "+status(3);
                 }
 				else
 				{

@@ -45,7 +45,7 @@ public class ElectionStart extends HttpServlet
 		{
 			System.out.println(ex);
 		}
-		request.setAttribute("result","VC T");
+		request.setAttribute("result","VC T F");
 		getServletContext().getRequestDispatcher("/vc.jsp").forward(request, response);//back to jsp page
     }
 }

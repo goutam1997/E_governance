@@ -13,7 +13,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<link rel="stylesheet" type="text/css" href="stylelogin.css">
-    <title>VC Admin Page</title>
+    <title>EC Admin Page</title>
 </head>
 <body>
 	<%
@@ -21,7 +21,10 @@
 		String str=u.toString();
 		String u_type=str.substring(0,2);
 		out.println("\n"+u_type);
-		char flag=str.charAt(3);%>
+		char flag,flag2;
+        flag=str.charAt(3);//for election start
+        flag2=str.charAt(5);//for committee creation
+        %>
         <h1>welcome</h1>
         <%
 		if (u_type.equals("EC"))
@@ -30,22 +33,20 @@
 			{
 			%>
 				<h2>Election not started</h2>
-				<form action = "elec_start" method = "post">
-				<button>Start Elections</button>
-                </form>
 			<%
 			}
-			else if (flag=='T') // election procedure started
+			else if (flag=='T' && flag2=='T') // election procedure started
 			{
 			%>
-				<h2> Create list here </h2>
+				<form action = "nom_filed" method = "post">
+                    <input type="submit" value="See Nominations Filed">
+                </form>
 			<%
 			}
 			else
 			{
 			%>
-				<p> List of members of Election Committe: </p>
-				<p> Enter Table here </p>
+				<p> Committee yet to be formed </p>
 			<%
 			}
 		}
